@@ -1,8 +1,8 @@
 package com.app.loadmore;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 
 public abstract class HorizontalLoadMoreListener extends RecyclerView.OnScrollListener {
@@ -13,15 +13,13 @@ public abstract class HorizontalLoadMoreListener extends RecyclerView.OnScrollLi
     @Override
     public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
         super.onScrollStateChanged(recyclerView, newState);
-        MediaListLayoutManager manager = (MediaListLayoutManager) recyclerView.getLayoutManager();
+        LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
         if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-            int lastItemPosition = manager.findLastVisiblePosition();
-            Log.e("wjq", "lastItemPosition = " + lastItemPosition);
-//            int itemCount = manager.getItemCount();
-//
-//            if (lastItemPosition == (itemCount - 1) && isSlidingLeftward) {
-//                onLoadMore();
-//            }
+            int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
+            int itemCount = manager.getItemCount();
+            if (lastItemPosition == (itemCount - 1) && isSlidingLeftward) {
+                onLoadMore();
+            }
         }
     }
 

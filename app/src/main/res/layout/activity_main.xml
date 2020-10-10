@@ -4,16 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ca2222"
     tools:context=".MainActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="240px"
+        android:layout_height="400px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.app.loadmore.PageIndicator
+        android:id="@+id/page_indicator"
+        android:layout_width="90px"
+        android:layout_height="10px"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recycler_view"
+        app:max_count="4"
+        app:normal_color="#666666"
+        app:normal_size="10px"
+        app:select_color="#88CDE3"
+        app:select_size="30px"
+        app:space="10px" />
+
 
 </android.support.constraint.ConstraintLayout>
