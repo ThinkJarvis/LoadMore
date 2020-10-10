@@ -1,5 +1,6 @@
 package com.app.loadmore;
 
+import android.animation.ArgbEvaluator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -8,13 +9,15 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 public class PageIndicator extends View {
 
     private final static int DEFAULT_WIDTH = 90;
     private final static int DEFAULT_HEIGHT = 10;
+
+    private final static int NORMAL_COLOR = Color.parseColor("#666666");
+    private final static int SELECT_COLOR = Color.parseColor("#88CDE3");
 
     private int mNormalSize;
     private int mSelectSize;
@@ -29,6 +32,9 @@ public class PageIndicator extends View {
     private RectF mRectF = new RectF();
     private float mDrawDistance = 0;
     private int mSelectIndex = 0;
+    private int mPageWidth = 1920;
+
+    private ArgbEvaluator mArgbEvaluator = new ArgbEvaluator();
 
     public PageIndicator(Context context) {
         this(context, null);
@@ -41,14 +47,23 @@ public class PageIndicator extends View {
     public PageIndicator(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.PageIndicator);
-        mNormalColor = typedArray.getColor(R.styleable.PageIndicator_normal_color, Color.parseColor("#666666"));
-        mSelectColor = typedArray.getColor(R.styleable.PageIndicator_select_color, Color.parseColor("#88CDE3"));
+        mNormalColor = typedArray.getColor(R.styleable.PageIndicator_normal_color, NORMAL_COLOR);
+        mSelectColor = typedArray.getColor(R.styleable.PageIndicator_select_color, SELECT_COLOR);
         mNormalSize = typedArray.getDimensionPixelSize(R.styleable.PageIndicator_normal_size, 10);
         mSelectSize = typedArray.getDimensionPixelSize(R.styleable.PageIndicator_select_size, 30);
         mMaxSize = typedArray.getInt(R.styleable.PageIndicator_max_count, 4);
         mSpace = typedArray.getDimensionPixelSize(R.styleable.PageIndicator_space, 10);
         typedArray.recycle();
-        Log.d("wjq", "mNormalSize = " + mNormalSize + " | mSelectSize = " + mSelectSize);
+    }
+
+
+    public void init(int pageWidth) {
+        mPageWidth = pageWidth;
+    }
+
+    public void setScrollDistance(int distanceX) {
+        mDrawDistance = distanceX;
+        postInvalidate();
     }
 
     @Override
@@ -59,6 +74,16 @@ public class PageIndicator extends View {
                     getRectF(i == mSelectIndex), mNormalSize / 2, mNormalSize / 2,
                     (i == mSelectIndex) ? mSelectPaint : mNormalPaint);
         }
+
+
+        int selectIndex = (int) (mDrawDistance / mPageWidth);
+
+        if (selectIndex == 0) {
+
+
+
+        }
+
 
     }
 

@@ -1,11 +1,14 @@
 package com.app.loadmore;
 
+import android.content.Context;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.WindowManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,20 +21,37 @@ public class MainActivity extends AppCompatActivity {
 
     private PageIndicator mPageIndicator;
 
+
+    float mDistanceX = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 //        initRecyclerView3();
         mPageIndicator = findViewById(R.id.page_indicator);
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        
-        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        final RecyclerView recyclerView = findViewById(R.id.recycler_view);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(new RecyclerAdapter());
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                //整体的总宽度，注意是整体，包括在显示区域之外的。
+                int range = recyclerView.computeHorizontalScrollRange();
+                //计算出溢出部分的宽度，即屏幕外剩下的宽度
+                float maxDistanceX = range - recyclerView.getMeasuredWidth();
+                //滑动的距离
+                mDistanceX += dx;
+                //计算比例
+                float proportion = mDistanceX / maxDistanceX;
+                Log.d("wjq", "range = " + range + " | maxDistanceX = " + maxDistanceX + " | mEndX = " + mDistanceX + " | proportion = " + proportion);
+
+            }
+        });
     }
-
-
-
 
 
 
