@@ -18,6 +18,8 @@ public class PageIndicator extends View {
 
     private final static int NORMAL_COLOR = Color.parseColor("#666666");
     private final static int SELECT_COLOR = Color.parseColor("#88CDE3");
+    private final static int NORMAL_INDICATOR_WIDTH =10;
+    private final static int SELECT_INDICATOR_WIDTH =30;
 
     private int mNormalSize;
     private int mSelectSize;
@@ -32,6 +34,8 @@ public class PageIndicator extends View {
     private RectF mRectF = new RectF();
     private float mDrawDistance = 0;
     private int mSelectIndex = 0;
+
+    private float mScrollViewDistanceX = 960;
     private int mPageWidth = 1920;
 
     private ArgbEvaluator mArgbEvaluator = new ArgbEvaluator();
@@ -49,8 +53,8 @@ public class PageIndicator extends View {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.PageIndicator);
         mNormalColor = typedArray.getColor(R.styleable.PageIndicator_normal_color, NORMAL_COLOR);
         mSelectColor = typedArray.getColor(R.styleable.PageIndicator_select_color, SELECT_COLOR);
-        mNormalSize = typedArray.getDimensionPixelSize(R.styleable.PageIndicator_normal_size, 10);
-        mSelectSize = typedArray.getDimensionPixelSize(R.styleable.PageIndicator_select_size, 30);
+        mNormalSize = typedArray.getDimensionPixelSize(R.styleable.PageIndicator_normal_size, NORMAL_INDICATOR_WIDTH);
+        mSelectSize = typedArray.getDimensionPixelSize(R.styleable.PageIndicator_select_size, SELECT_INDICATOR_WIDTH);
         mMaxSize = typedArray.getInt(R.styleable.PageIndicator_max_count, 4);
         mSpace = typedArray.getDimensionPixelSize(R.styleable.PageIndicator_space, 10);
         typedArray.recycle();
@@ -62,7 +66,7 @@ public class PageIndicator extends View {
     }
 
     public void setScrollDistance(int distanceX) {
-        mDrawDistance = distanceX;
+        mScrollViewDistanceX = distanceX;
         postInvalidate();
     }
 
@@ -75,14 +79,6 @@ public class PageIndicator extends View {
                     (i == mSelectIndex) ? mSelectPaint : mNormalPaint);
         }
 
-
-        int selectIndex = (int) (mDrawDistance / mPageWidth);
-
-        if (selectIndex == 0) {
-
-
-
-        }
 
 
     }
